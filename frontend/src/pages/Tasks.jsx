@@ -52,7 +52,7 @@ function Tasks() {
   const addTask = async () => {
     if (!input.trim()) return;
     setLoading(true);
-    const res = await authFetch("${API_BASE}/api/tasks", {
+    const res = await authFetch(`${API_BASE}/api/tasks`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ text: input, category, priority, dueDate })
