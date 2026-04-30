@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { API_BASE } from "./config";
+import { API_BASE } from "../config";
 
 // Fix #10 — safe auth fetch
 const authFetch = async (url, options = {}) => {
