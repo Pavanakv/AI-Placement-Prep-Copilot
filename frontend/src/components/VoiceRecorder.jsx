@@ -1,4 +1,5 @@
 import { useState, useRef } from "react";
+import { API_BASE } from "../config";
 
 function VoiceRecorder({ onTranscribed }) {
   const [recording, setRecording] = useState(false);
@@ -44,7 +45,7 @@ function VoiceRecorder({ onTranscribed }) {
     formData.append("audio", blob, "answer.webm");
 
     try {
-      const res = await fetch("http://localhost:5000/api/transcribe", {
+      const res = await fetch(`${API_BASE}/api/transcribe`, {
         method: "POST",
         body: formData,
       });

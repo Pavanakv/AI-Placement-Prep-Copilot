@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { API_BASE } from "../config";
 
 // Fix #10 — safe auth fetch
 const authFetch = async (url, options = {}) => {
@@ -31,7 +32,7 @@ function ResumeBuilder() {
 
     setLoading(true);
     setResult("");
-    const res = await authFetch("http://localhost:5000/api/ai", {
+    const res = await authFetch(`${API_BASE}/api/ai`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ type: "resume", input }),

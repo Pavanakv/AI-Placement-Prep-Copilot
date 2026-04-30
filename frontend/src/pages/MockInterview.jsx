@@ -1,4 +1,5 @@
 import { useState, useRef } from "react";
+import { API_BASE } from "../config";
 import VoiceRecorder from "../components/VoiceRecorder";
 
 // Fix #10 — safe auth fetch helper
@@ -44,7 +45,7 @@ function MockInterview() {
 
   const saveInterviewToDB = async (finalScores) => {
     try {
-      await authFetch("http://localhost:5000/api/interviews", {
+      await authFetch(`${API_BASE}/api/interviews`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ role, level, focus, scores: finalScores })
@@ -55,7 +56,7 @@ function MockInterview() {
   const startInterview = async () => {
     setLoading(true);
     setStarted(true);
-    const res = await authFetch("http://localhost:5000/api/ai", {
+    const res = await authFetch(`${API_BASE}/api/ai`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -81,7 +82,7 @@ function MockInterview() {
     setLoading(true);
     scrollToBottom();
 
-    const res = await authFetch("http://localhost:5000/api/ai", {
+    const res = await authFetch(`${API_BASE}/api/ai`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import TaskCard from "../components/TaskCard";
 import InsightsPanel from "../components/InsightsPanel";
+import { API_BASE } from "../config";
 
 // Fix #10 — safe auth fetch, never sends "Bearer null"
 const authFetch = async (url, options = {}) => {
@@ -34,7 +35,7 @@ function Tasks() {
 
   const fetchTasks = async () => {
     setFetching(true);
-    const res = await authFetch("http://localhost:5000/api/tasks");
+    const res = await authFetch(`${API_BASE}/api/tasks`);
     if (!res) return;
     const data = await res.json();
     const sorted = (data.tasks || []).sort((a, b) => {
@@ -51,7 +52,7 @@ function Tasks() {
   const addTask = async () => {
     if (!input.trim()) return;
     setLoading(true);
-    const res = await authFetch("http://localhost:5000/api/tasks", {
+    const res = await authFetch("${API_BASE}/api/tasks", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ text: input, category, priority, dueDate })
@@ -64,21 +65,21 @@ function Tasks() {
   };
 
   const toggleTask = async (id) => {
-    const res = await authFetch(`http://localhost:5000/api/tasks/${id}/toggle`, { method: "PATCH" });
+    const res = await authFetch(`${API_BASE}/api/tasks/${id}/toggle`, { method: "PATCH" });
     if (!res) return;
     const data = await res.json();
     setTasks(prev => prev.map(t => t._id === id ? data.task : t));
   };
 
   const deleteTask = async (id) => {
-    await authFetch(`http://localhost:5000/api/tasks/${id}`, { method: "DELETE" });
+    await authFetch(`${API_BASE}/api/tasks/${id}`, { method: "DELETE" });
     setTasks(prev => prev.filter(t => t._id !== id));
   };
 
   const clearAllTasks = async () => {
     // Fix #12 — double confirm to prevent accidental clear
     if (!window.confirm("Delete ALL tasks? This cannot be undone!")) return;
-    await authFetch("http://localhost:5000/api/tasks", { method: "DELETE" });
+    await authFetch(`${API_BASE}/api/tasks`, { method: "DELETE" });
     setTasks([]);
   };
 

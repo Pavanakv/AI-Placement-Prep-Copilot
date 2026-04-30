@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { API_BASE } from "../config";
 
 // Fix #10 — safe auth fetch
 const authFetch = async (url, options = {}) => {
@@ -27,7 +28,7 @@ function InterviewHistory() {
 
   const fetchInterviews = async () => {
     setFetching(true);
-    const res = await authFetch("http://localhost:5000/api/interviews");
+    const res = await authFetch(`${API_BASE}/api/interviews`);
     if (!res) return;
     const data = await res.json();
     setInterviews(data.interviews || []);

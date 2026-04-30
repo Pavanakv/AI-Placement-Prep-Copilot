@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { API_BASE } from "../config";
 
 const authFetch = async (url, options = {}) => {
   const token = localStorage.getItem("token");
@@ -25,7 +26,7 @@ function InsightsPanel() {
 
   const fetchInsights = async () => {
     try {
-      const res = await authFetch("http://localhost:5000/api/insights");
+      const res = await authFetch(`${API_BASE}/api/insights`);
       if (!res) return;
       const json = await res.json();
       setData(json.insights);

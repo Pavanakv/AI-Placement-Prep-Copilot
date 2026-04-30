@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { API_BASE } from "./config";
 
 // Fix #10 — safe auth fetch
 const authFetch = async (url, options = {}) => {
@@ -41,7 +42,7 @@ function AIPlanner() {
 
     const input = `Target Job Role: ${jobRole}\nDays left for placement: ${daysLeft}\nAvailable hours per day: ${hoursPerDay}\nWeak topics: ${weakTopics || "Not specified"}`;
 
-    const res = await authFetch("http://localhost:5000/api/ai", {
+    const res = await authFetch(`${API_BASE}/api/ai`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ type: "planner", input })
@@ -72,7 +73,7 @@ function AIPlanner() {
       }
     }
     await Promise.all(allTasks.map(task =>
-      authFetch("http://localhost:5000/api/tasks", {
+      authFetch(`${API_BASE}/api/tasks`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(task)
