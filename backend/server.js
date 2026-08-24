@@ -1,4 +1,4 @@
-require("dotenv").config(); // THIS MUST BE FIRST LINE
+require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const connectDB = require("./config/db");
@@ -8,12 +8,14 @@ const taskRoutes = require("./routes/task.routes");
 const interviewRoutes = require("./routes/interview.routes");
 const insightsRoutes = require("./routes/insights.routes");
 
-
 const app = express();
-
 connectDB();
 
-app.use(cors());
+app.use(cors({
+  origin: "https://ai-placement-prep-copilot.vercel.app",
+  credentials: true
+}));
+
 app.use(express.json());
 
 app.use("/api/auth", authRoutes);
@@ -22,6 +24,7 @@ app.use("/api/interviews", interviewRoutes);
 app.use("/api/insights", insightsRoutes);
 app.use("/api", aiRoutes);
 
-app.listen(5000, () => {
-  console.log("Server running on port 5000");
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
